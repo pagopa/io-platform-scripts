@@ -79,3 +79,4 @@ echo "PR #$pr_num has been created in repo $repo"
 #hub pr show "$pr_num"
 
 cd ..
+rm -rf "$repo"

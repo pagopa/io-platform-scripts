@@ -11,8 +11,8 @@ A useful group of scripts to maximize the management of severalpagopa's repo tog
 
 ```bash
     echo "github.com:
-        - user: _<github username>_
-          oauth_token: _<github token>_" > ~/.config/hub
+          - user: <github username>
+            oauth_token: <github token>" > ~/.config/hub
 ```
 
 ### Example
