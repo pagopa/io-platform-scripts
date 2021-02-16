@@ -1,6 +1,6 @@
 # io-platform-scripts
 
-A useful group of scripts to maximize the management of severalpagopa's repo together
+A useful group of scripts to maximize the management of several pagopa's repo together
 
 ## add-file-to-repo
 
