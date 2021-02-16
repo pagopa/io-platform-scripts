@@ -61,13 +61,20 @@ pr_title="$(get_input "pr_title")"
 pr_description="$(get_input "pr_description")"
 
 git clone "git@github.com:pagopa/$repo.git"
+cd "$repo" || exit 1;
+
+# --------------------------------------
+# Custom code
+# --------------------------------------
 
 cp "$from_folder/$file_name" "$repo/$to_folder/$file_name"
-
-cd "$repo" || exit 1;
-git checkout -b "$branch_name"
-
 git add "$to_folder/$file_name"
+
+# --------------------------------------
+# / End Custom code
+# --------------------------------------
+
+git checkout -b "$branch_name"
 git commit -m "$pr_title"
 
 git push origin "$branch_name"

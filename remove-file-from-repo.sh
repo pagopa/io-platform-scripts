@@ -56,10 +56,18 @@ pr_title="$(get_input "pr_title")"
 pr_description="$(get_input "pr_description")"
 
 git clone "git@github.com:pagopa/$repo.git"
+cd "$repo" || exit 1;
+
+# --------------------------------------
+# Custom code
+# --------------------------------------
 
 rm "$repo/$from_folder/$file_name"
 
-cd "$repo" || exit 1;
+# --------------------------------------
+# / End Custom code
+# --------------------------------------
+
 git checkout -b "$branch_name"
 
 git add "$from_folder/$file_name"
