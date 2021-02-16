@@ -62,19 +62,20 @@ pr_description="$(get_input "pr_description")"
 
 git clone "git@github.com:pagopa/$repo.git"
 cd "$repo" || exit 1;
+git checkout -b "$branch_name"
 
 # --------------------------------------
 # Custom code
 # --------------------------------------
 
-cp "$from_folder/$file_name" "$repo/$to_folder/$file_name"
+sh -c "cp ../$from_folder/$file_name $to_folder/"
 git add "$to_folder/$file_name"
 
 # --------------------------------------
 # / End Custom code
 # --------------------------------------
 
-git checkout -b "$branch_name"
+git status
 git commit -m "$pr_title"
 
 git push origin "$branch_name"
@@ -83,7 +84,7 @@ hub pull-request -m "$pr_title" -m "$pr_description"
 pr_num=$(hub pr list | grep "$pr_title" | awk '{print $1}' | sed 's/#//')
 echo "PR #$pr_num has been created in repo $repo"
 
-#hub pr show "$pr_num"
+hub pr show "$pr_num"
 
 cd ..
 rm -rf "$repo"
