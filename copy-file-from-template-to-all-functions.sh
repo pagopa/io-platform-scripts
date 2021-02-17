@@ -2,7 +2,7 @@
 
 repo_template="io-functions-template"
 
-usage="usage: copy-file-from-template-to-all-functions.sh [file_name] [branch_name] [pr_title] [pr_description]
+usage="usage: copy-file-from-template-to-all-repo.sh [file_name] [branch_name] [pr_title] [pr_description]
        where:
        - file_name: the name of the file to add
        - branch_name: the name of the branch to create

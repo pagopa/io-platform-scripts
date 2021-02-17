@@ -2,10 +2,9 @@
 
 A useful group of scripts to maximize the management of several pagopa's repo together
 
-## add-file-to-repo
+## Prerequisites
 
-### Prerequisites
-
+- Updating the list of repository we want to update under _io-functions-list.txt_
 - Having _hub_ command installed
 - Setup _hub_ config file with _username_ and _Github Personal Access Token_ like this:
 
@@ -15,36 +14,16 @@ A useful group of scripts to maximize the management of several pagopa's repo to
             oauth_token: <github token>" > ~/.config/hub
 ```
 
-### Example
+## Scripts
 
-#### One project
+### copy-file-from-template-to-all-functions
 
-```bash
-add-file-to-repo.sh io-functions-app .devops/yarn-lock-upgrade.yml io/io-functions-test-deploy . test-branch "Test PR Title" "Test PR Description"
-```
+Script used to copy one or more files from _io-functions-template_ to all the repos contained into _io-funtctions-list.txt_ and make a PR each
 
-#### Multiple projects
+### remove-file-from-all-repo
 
-```bash
-echo "io-functions-test-deploy\nio-functions-template" | xargs -I{} ./scripts/add-file-to-repo.sh {}  .devops/yarn-lock-upgrade.yml io/io-functions-test-deploy . test-branch "Test PR Title" "Test PR Description" 
-```
+Script used to remove one or more files from all the repos contained into _io-functions-list.txt_ and make a PR each
 
-## 2) remove-file-from-repo
+### update-all-package-names-with-org
 
-### Prerequisites
-
-Same as ['add-file-to-repo'](#add-file-to-repo)
-
-### Example
-
-#### One project
-
-```bash
-remove-file-from-repo.sh io-functions-app  yarn-lock-upgrade.yml .devops test-branch "Test PR Title" "Test PR Description"
-```
-
-#### Multiple projects
-
-```bash
-echo "io-functions-test-deploy\nio-functions-template" | xargs -I{} ./scripts/remove-file-from-repo {}  yarn-lock-upgrade.yml .devops test-branch "Test PR Title" "Test PR Description" 
-```
+One-time only script to update the package name with "@pagopa/" prefix for all repos contained into _io-functions-list.txt_ and make a PR each

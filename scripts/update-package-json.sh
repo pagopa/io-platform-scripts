@@ -5,18 +5,15 @@
 # -------------------------------------------------------
 
 
-usage="usage: add-file-to-repo [github_repo] [file_name] [from_folder] [to_folder] [branch_name] [pr_title] [pr_description]
+usage="usage: update-package-json [github_repo] [branch_name] [pr_title] [pr_description]
     where:
     - github_repo: github repo where file needs to be added
-    - file_name: the name of the file to add
-    - from_folder: the path of the folder where the file is present
-    - to_folder: the path of the folder where the file has to be added
     - branch_name: the name of the branch to create
     - pr_title: the title of the PR
     - pr_description: the description of the PR
 "
 
-if [[ ! $# -eq 7 ]] ; then
+if [[ ! $# -eq 4 ]] ; then
     echo "$usage"
     exit 1
 fi
@@ -29,23 +26,14 @@ get_input()
      "github_repo")
         echo "${inputs[0]}"
         ;;
-     "file_name")
+     "branch_name")
         echo "${inputs[1]}"
         ;;
-     "from_folder")
+     "pr_title")
         echo "${inputs[2]}"
         ;;
-     "to_folder")
-        echo "${inputs[3]}"
-        ;;
-     "branch_name")
-        echo "${inputs[4]}"
-        ;;
-     "pr_title")
-        echo "${inputs[5]}"
-        ;;
      "pr_description")
-        echo "${inputs[6]}"
+        echo "${inputs[3]}"
         ;;
 
      esac
@@ -54,22 +42,27 @@ get_input()
 
 repo="$(get_input "github_repo")"
 branch_name="$(get_input "branch_name")"
-file_name="$(get_input "file_name")"
-from_folder="$(get_input "from_folder")"
-to_folder="$(get_input "to_folder")"
 pr_title="$(get_input "pr_title")"
 pr_description="$(get_input "pr_description")"
 
 git clone "git@github.com:pagopa/$repo.git"
 cd "$repo" || exit 1;
-git checkout -b "$branch_name"
+# git checkout -b "$branch_name"
 
 # --------------------------------------
 # Custom code
 # --------------------------------------
 
-sh -c "cp ../$from_folder/$file_name $to_folder/"
-git add "$to_folder/$file_name"
+package_name=$(cat "package.json" | jq -r '.name')
+has_org=$(cat "package.json" | jq '.name | contains("@pagopa/")')
+
+echo "--> Repo $repo contains @pagopa: $has_org (package name: $package_name)"
+
+if [ $has_org == false ]; 
+then 
+   echo "Aggiungere @pagopa a $repo"
+   jq ".name = \"@pagopa/$package_name\"" package.json
+fi
 
 # --------------------------------------
 # / End Custom code

@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # -------------------------------------------------------
-# A shell script to add  file to a repo and make a PR
+# A shell script to remove  file to a repo and make a PR
 # -------------------------------------------------------
 
 
-usage="usage: add-file-to-repo [github_repo] [file_name] [from_folder] [branch_name] [pr_title] [pr_description]
+usage="usage: remove-file-from-repo [github_repo] [file_name] [from_folder] [branch_name] [pr_title] [pr_description]
     where:
     - github_repo: github repo where file needs to be removed
     - file_name: the name of the file to remove
@@ -71,15 +71,14 @@ sh -c "/bin/rm -f $from_folder/$file_name"
 
 
 git status
-# git add "$from_folder/$file_name"
-# git commit -m "$pr_title"
+git add "$from_folder/$file_name"
+git commit -m "$pr_title"
 
-# git push origin "$branch_name"
-# hub pull-request -m "$pr_title" -m "$pr_description" -d
+git push origin "$branch_name"
+hub pull-request -m "$pr_title" -m "$pr_description" -d
 
-# pr_num=$(hub pr list | grep "$pr_title" | awk '{print $1}' | sed 's/#//')
-# echo "PR #$pr_num has been created in repo $repo"
-# hub pr show "$pr_num"
+pr_num=$(hub pr list | grep "$pr_title" | awk '{print $1}' | sed 's/#//')
+echo "PR #$pr_num has been created in repo $repo"
 
 cd ..
 rm -rf "$repo"
