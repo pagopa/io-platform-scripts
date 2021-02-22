@@ -17,5 +17,4 @@ branch_name="${inputs[0]}"
 pr_title="${inputs[1]}"
 pr_description="${inputs[2]}"
 
-echo "Removing file(s).."
 cat "io-functions-list.txt"  | xargs -I{} scripts/fix-dependencies.sh {} "$branch_name" "$pr_title" "$pr_description" 

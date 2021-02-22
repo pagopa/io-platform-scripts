@@ -1,9 +1,1 @@
-io-functions-app
-io-functions-assets
-io-functions-backoffice
-io-functions-bonus
-io-functions-bonusapi
-io-functions-paymentmanager
-io-functions-public
-io-functions-services
 io-functions-cgn
