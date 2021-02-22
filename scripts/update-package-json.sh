@@ -47,7 +47,7 @@ pr_description="$(get_input "pr_description")"
 
 git clone "git@github.com:pagopa/$repo.git"
 cd "$repo" || exit 1;
-# git checkout -b "$branch_name"
+git checkout -b "$branch_name"
 
 # --------------------------------------
 # Custom code
@@ -61,21 +61,24 @@ echo "--> Repo $repo contains @pagopa: $has_org (package name: $package_name)"
 if [ $has_org == false ]; 
 then 
    echo "Aggiungere @pagopa a $repo"
-   jq ".name = \"@pagopa/$package_name\"" package.json
+   echo "$(jq ".name = \"@pagopa/$package_name\"" package.json)" > package.json
+
+   git add package.json
+
+   # --------------------------------------
+   # / End Custom code
+   # --------------------------------------
+
+   git commit -m "$pr_title"
+
+   git push origin "$branch_name"
+   hub pull-request -m "$pr_title" -m "$pr_description"
+
+   pr_num=$(hub pr list | grep "$pr_title" | awk '{print $1}' | sed 's/#//')
+   echo "PR #$pr_num has been created in repo $repo"
+
 fi
 
-# --------------------------------------
-# / End Custom code
-# --------------------------------------
-
-git status
-git commit -m "$pr_title"
-
-git push origin "$branch_name"
-hub pull-request -m "$pr_title" -m "$pr_description"
-
-pr_num=$(hub pr list | grep "$pr_title" | awk '{print $1}' | sed 's/#//')
-echo "PR #$pr_num has been created in repo $repo"
 
 cd ..
 rm -rf "$repo"

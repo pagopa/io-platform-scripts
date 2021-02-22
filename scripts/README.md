@@ -46,6 +46,5 @@ remove-file-from-repo.sh io-functions-app  yarn-lock-upgrade.yml .devops test-br
 #### Multiple projects
 
 ```bash
-echo "io-functions-test-deploy\nio-functions-template" | xargs -I{} ./scripts/remove-file-from-repo {}  yarn-lock-upgrade.yml .devops test-branch "Test PR Title" "Test PR Description" 
+echo "io-functions-test-deploy\io-functions-template" | xargs -I{} ./scripts/remove-file-from-repo {}  yarn-lock-upgrade.yml .devops test-branch "Test PR Title" "Test PR Description" 
 ```
-É
