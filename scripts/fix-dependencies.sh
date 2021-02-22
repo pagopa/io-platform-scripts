@@ -65,6 +65,8 @@ echo "$(jq ".exclude= [\"__mocks__\", \"$out_dir\", \"node_modules\", \"**/__tes
 yarn install --frozen-lockfile
 yarn build
 
+yarn add -D dependency-check
+
 npx dependency-check package.json --no-dev --missing ./$out_dir/**/*.js >> check_dep 2>&1
 missing_dependencies="$(grep "Fail" check_dep | sed "s/Fail\\! Dependencies not listed in package.json: *//g")"
 
@@ -80,7 +82,7 @@ rm check_dep
 # End check missing dependencies and add them
 
 # Add postbuild check
-echo "$(jq ".scripts.postbuild= \"npx dependency-check package.json --no-dev --missing ./$out_dir/**/*.js\"" package.json)" > package.json
+echo "$(jq ".scripts.postbuild= \"dependency-check package.json --no-dev --missing ./$out_dir/**/*.js\"" package.json)" > package.json
 
 
 yarn build
