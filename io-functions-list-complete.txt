@@ -8,3 +8,4 @@ io-functions-paymentmanager
 io-functions-public
 io-functions-services
 io-functions-cgn
+io-functions-eucovidcerts
